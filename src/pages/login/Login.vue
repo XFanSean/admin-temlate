@@ -1,3 +1,5 @@
 <template>
-  <div>登录页</div>
+  <div class="h-full">123</div>
 </template>
+
+<script lang="ts" setup></script>

@@ -1,3 +1,4 @@
+// 包装全局变量
 export function wrapperEnv(envConf: Recordable): ViteEnv {
   const ret: any = {}
 

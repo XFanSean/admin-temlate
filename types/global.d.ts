@@ -10,4 +10,8 @@ declare interface ViteEnv {
   VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean
   VITE_USE_IMAGEMIN: boolean
   VITE_GENERATE_UI: string
+  VITE_LEGACY: boolean
+  VITE_GLOB_DOMAIN_URL: string
+  VITE_GLOB_API_URL: string
+  VITE_GLOB_API_URL_PREFIX: string
 }
