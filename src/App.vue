@@ -2,4 +2,10 @@
   <router-view />
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="less">
+#app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+</style>
