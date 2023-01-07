@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { PasswordLoginParams, PhoneNumberLoginParams } from '#/user'
 import { getPermissionByToken, queryUserInfo, userPasswordLogin } from '@/api/user'
-import { removeItem, setItem, setSessionStorageItem } from '@/utils/cache/storage'
+import { removeItem, setItem } from '@/utils/cache/storage'
 import { useRoute, useRouter } from 'vue-router'
 import { CacheKeyEnum } from '@/enum/cache'
 import {
@@ -83,17 +83,25 @@ export const useUserStore = defineStore('user', {
       routeList = routeList.filter(routeRemoveIgnoreFilter)
 
       routeList = flatMultiLevelRoutes(routeList)
+      // 删除meta.ignoreRoute项
+      routeList = filter(routeList, routeRemoveIgnoreFilter)
+      routeList = routeList.filter(routeRemoveIgnoreFilter)
+
+      routeList = flatMultiLevelRoutes(routeList)
       this.addRoutesToRouter(routeList)
       this.isAddRoutesComplete = true
+      this.generateMenuList(routeList)
     },
     // 添加路由
     addRoutesToRouter(routeList: any) {
-      // 保存routeList到sessionStorage
-      setSessionStorageItem('routeList', JSON.stringify(routeList))
       // 添加路由
       routeList.forEach((route: any) => {
         router.addRoute(route)
       })
+    },
+    // 生成菜单
+    generateMenuList(routerList: any) {
+      this.menuList = transformRouteToMenu(routerList)
     },
   },
 })

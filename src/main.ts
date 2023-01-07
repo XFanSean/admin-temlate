@@ -12,6 +12,7 @@ const app = createApp(App)
 // 状态管理
 app.use(store)
 
+// 解决刷新路由丢失的问题
 async function init() {
   const userStore = useUserStore()
   if (getItem('token')) {
