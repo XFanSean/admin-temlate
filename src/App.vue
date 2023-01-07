@@ -2,6 +2,8 @@
   <router-view />
 </template>
 
+<script lang="ts" setup></script>
+
 <style lang="less">
 #app {
   height: 100vh;

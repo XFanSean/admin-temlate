@@ -8,11 +8,14 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "compilerOptions ": true,
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@": ["src"]
+      "@": ["src"],
+      "#/*": ["types/*"],
+      "#": ["types"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "build/*.ts", "build/**/*.ts", "types/*.d.ts"]

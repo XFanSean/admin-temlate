@@ -16,12 +16,14 @@ export default defineConfig(({ mode, command }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
+        '#': path.resolve(__dirname, 'types'),
       },
     },
     server: {
       port: VITE_PORT,
       // https: true,
       proxy: createProxy(VITE_PROXY),
+      hmr: true,
       // host: 'lo',
     },
     plugins: createVitePlugins(viteEnv, isBuild),

@@ -14,6 +14,7 @@ declare interface ViteEnv {
   VITE_GLOB_DOMAIN_URL: string
   VITE_GLOB_API_URL: string
   VITE_GLOB_API_URL_PREFIX: string
+  VITE_SHORT_NAME: string
 }
 
 declare interface GlobEnvConfig {
@@ -23,4 +24,10 @@ declare interface GlobEnvConfig {
   VITE_GLOB_API_URL: string
   // Service interface url prefix
   VITE_GLOB_API_URL_PREFIX?: string
+  VITE_SHORT_NAME: string
+  VITE_PUBLIC_PATH: string
+}
+
+declare interface Fn<T = any, R = T> {
+  (...arg: T[]): R
 }

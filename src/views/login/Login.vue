@@ -46,11 +46,11 @@
                 </template>
               </a-input>
             </a-form-item>
-            <a-form-item :rules="[{ required: true, message: '请输入验证码' }]" name="code">
+            <a-form-item :rules="[{ required: true, message: '请输入验证码' }]" name="captcha">
               <a-row :gutter="16">
                 <a-col :span="16">
                   <a-input
-                    v-model:value="mobileLoginForm.phoneNumber"
+                    v-model:value="mobileLoginForm.captcha"
                     placeholder="验证码"
                     size="large"
                   >
@@ -60,7 +60,7 @@
                   </a-input>
                 </a-col>
                 <a-col :span="8">
-                  <a-button size="large">获取验证码</a-button>
+                  <a-button size="large">{{ getCaptchaBtnText }}</a-button>
                 </a-col>
               </a-row>
             </a-form-item>
@@ -87,6 +87,14 @@ import type { FormInstance } from 'ant-design-vue'
 import { reactive, ref } from 'vue'
 import { getAppEnvConfig } from '@/utils/env'
 import { LockOutlined, MailOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons-vue'
+import { useUserStore } from '@/store/modules/user'
+import { cloneDeep } from 'lodash-es'
+import { MD5 } from 'crypto-js'
+import { useRoute, useRouter } from 'vue-router'
+
+const userStore = useUserStore()
+const { push } = useRouter()
+const { query } = useRoute()
 
 const { VITE_GLOB_APP_TITLE: title } = getAppEnvConfig()
 
@@ -108,40 +116,37 @@ const mobileLoginForm = reactive({
   // 手机号
   phoneNumber: '',
   // 验证码
-  code: '',
+  captcha: '',
   // 验证码ID
-  codeKey: '',
+  captchaKey: '',
 })
+const getCaptchaBtnText = ref('获取验证码')
 
 // 登录按钮加载状态
 const loginBtnLoading = ref(false)
 
 // 点击登录按钮
-function handleLoginBtn() {
-  activeTab.value === '1' ? loginByPassword() : loginByPhoneNumber()
-}
-
-// 账号密码登录
-async function loginByPassword() {
+async function handleLoginBtn() {
   try {
     await credentialsLoginFormRef.value!.validateFields()
     loginBtnLoading.value = true
-  } catch (e) {
+    const formData = cloneDeep(credentialsLoginForm)
+    // 密码MD5加密
+    if (activeTab.value === '1' && credentialsLoginForm.username !== 'admin') {
+      formData.password = MD5(formData.password).toString()
+    }
+    await userStore.userLogin(
+      activeTab.value === '1' ? 'password' : 'phoneNumber',
+      activeTab.value === '1' ? formData : mobileLoginForm
+    )
     loginBtnLoading.value = false
-    console.error(e)
-  }
-}
-
-// 手机号验证码登录
-async function loginByPhoneNumber() {
-  try {
-    await mobileLoginFormRef.value!.validateFields()
-    loginBtnLoading.value = true
+    // 跳转
+    push({
+      path: '/',
+    })
   } catch (e) {
     loginBtnLoading.value = false
     console.error(e)
   }
 }
 </script>
-
-<style lang="less" scoped></style>

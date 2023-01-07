@@ -1,17 +1,27 @@
+import 'uno.css'
+import './styles/index.less'
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import { store } from './store'
-
-import './styles/index.less'
-import 'uno.css'
+import { useUserStore } from '@/store/modules/user'
+import { getItem } from '@/utils/cache/storage'
 
 const app = createApp(App)
+// 状态管理
+app.use(store)
+
+async function init() {
+  const userStore = useUserStore()
+  if (getItem('token')) {
+    await userStore.getUserInfo()
+    await userStore.getMenuList()
+  }
+}
+await init()
 
 // 路由
 app.use(router)
-
-// 状态管理
-app.use(store)
 
 app.mount('#app')

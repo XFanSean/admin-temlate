@@ -30,5 +30,6 @@ export function createProxy(list: ProxyList = []) {
       ...(isHttps ? { secure: false } : {}),
     }
   }
+  console.log(ret)
   return ret
 }

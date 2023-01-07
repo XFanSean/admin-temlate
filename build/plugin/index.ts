@@ -1,6 +1,7 @@
 import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { configHtmlPlugin } from './html'
 import { configImageminPlugin } from './imagemin'
 import { configCompressPlugin } from './compression'
@@ -17,6 +18,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   } = viteEnv
   const plugins: (PluginOption | PluginOption[])[] = [
     vue(),
+    vueJsx(),
     configHtmlPlugin(viteEnv, isBuild),
     autoImportConfig(),
     unocssConfig(),
