@@ -51,6 +51,10 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
       warn('请正确配置路由：' + route?.name + '的component属性')
     }
     route.children && asyncImportRoute(route.children)
+    // TODO没有取到这个路由，导致生成菜单会少一项
+    // if (route.path === '/dashboard/Analysis') {
+    //   route.component = import('@/views/dashboard/Analysis/index.ts')
+    // }
   })
   return routeList as unknown as T[]
 }

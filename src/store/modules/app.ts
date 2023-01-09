@@ -1,6 +1,17 @@
 import { defineStore } from 'pinia'
+import { AppRouteRecordRaw } from '@/router/types'
 
-const useAppStore = defineStore('app', {
-  state: () => ({}),
+interface IAppStoreState {
+  menuList: AppRouteRecordRaw[]
+  menuOpenKeys: string[]
+  menuSelectKeys: string[]
+}
+
+export const useAppStore = defineStore('app', {
+  state: (): IAppStoreState => ({
+    menuList: [],
+    menuOpenKeys: [],
+    menuSelectKeys: [],
+  }),
   actions: {},
 })

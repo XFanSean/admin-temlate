@@ -60,7 +60,8 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
     },
   })
   joinParentPath(list)
-  return cloneDeep(list)
+  const clonedList = cloneDeep(list)
+  return clonedList
 }
 
 function joinParentPath(menus: Menu[], parentPath = '') {

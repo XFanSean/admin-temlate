@@ -12,14 +12,19 @@ import {
 import { filter, transformRouteToMenu } from '@/router/helper/menuHelper'
 import { AppRouteRecordRaw } from '@/router/types'
 import router from '@/router'
+import { useAppStore } from './app'
 
 type LoginTypes = 'password' | 'phoneNumber'
+interface IUserStoreState {
+  token: string
+  userInfo: any
+  isAddRoutesComplete: boolean
+}
 
 export const useUserStore = defineStore('user', {
-  state: () => ({
+  state: (): IUserStoreState => ({
     token: '',
     userInfo: {},
-    menuList: [] as any,
     isAddRoutesComplete: false,
   }),
   actions: {
@@ -60,6 +65,7 @@ export const useUserStore = defineStore('user', {
         path: '/login',
         query: { redirectTo: path },
       })
+      location.reload()
     },
     // 获取用户权限表
     async getMenuList() {
@@ -69,9 +75,7 @@ export const useUserStore = defineStore('user', {
       routeList = addSlashToRouteComponent(routeList)
       // 动态引入组件
       routeList = transformObjToRoute(routeList)
-      // 构建后台路由菜单
-      const backMenuList = transformRouteToMenu(routeList)
-      // this.menuList = backMenuList
+      this.generateMenuList(routeList)
       // list?.length > 0 && this.setLastBuildMenuTime()
       const routeRemoveIgnoreFilter = (route: AppRouteRecordRaw) => {
         const { meta } = route
@@ -90,7 +94,6 @@ export const useUserStore = defineStore('user', {
       routeList = flatMultiLevelRoutes(routeList)
       this.addRoutesToRouter(routeList)
       this.isAddRoutesComplete = true
-      this.generateMenuList(routeList)
     },
     // 添加路由
     addRoutesToRouter(routeList: any) {
@@ -101,7 +104,8 @@ export const useUserStore = defineStore('user', {
     },
     // 生成菜单
     generateMenuList(routerList: any) {
-      this.menuList = transformRouteToMenu(routerList)
+      const appStore = useAppStore()
+      appStore.menuList = transformRouteToMenu(routerList)
     },
   },
 })
