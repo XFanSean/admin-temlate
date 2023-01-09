@@ -4,7 +4,7 @@
       <span>商家后台</span>
     </div>
     <div class="flex-1">
-      <Scrollbar ref="scrollBarRef">
+      <Scrollbar>
         <a-menu
           v-model:openKeys="appStore.menuOpenKeys"
           v-model:selectedKeys="appStore.menuSelectKeys"
@@ -25,12 +25,11 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import MenuItem from './MenuItem.vue'
 import SubMenu from './SubMenu.vue'
 import { Scrollbar } from '@/components/Scrollbar'
-import { ScrollBarMethods } from '@/components/Scrollbar/src/types'
 
 const appStore = useAppStore()
 
@@ -52,9 +51,7 @@ watch(
   }
 )
 
-const scrollBarRef = ref<ScrollBarMethods | null>(null)
 function handleMenuItem({ item }) {
-  scrollBarRef.value!.updateThumbStyle()
   console.log(item)
 }
 </script>

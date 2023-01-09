@@ -8,6 +8,7 @@ import { configCompressPlugin } from './compression'
 import { configVisualizerConfig } from './visualizer'
 import { autoImportConfig } from './autoImport'
 import { unocssConfig } from './unocss'
+import { configSvgIconsPlugin } from './svgSprite'
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -22,6 +23,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     configHtmlPlugin(viteEnv, isBuild),
     autoImportConfig(),
     unocssConfig(),
+    configSvgIconsPlugin(isBuild),
   ]
 
   // 打包情况下
