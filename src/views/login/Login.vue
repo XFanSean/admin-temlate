@@ -89,7 +89,6 @@ import { getAppEnvConfig } from '@/utils/env'
 import { LockOutlined, MailOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons-vue'
 import { useUserStore } from '@/store/modules/user'
 import { cloneDeep } from 'lodash-es'
-import { MD5 } from 'crypto-js'
 import { useRoute, useRouter } from 'vue-router'
 
 const userStore = useUserStore()
@@ -132,9 +131,9 @@ async function handleLoginBtn() {
     loginBtnLoading.value = true
     const formData = cloneDeep(credentialsLoginForm)
     // 密码MD5加密
-    if (activeTab.value === '1' && credentialsLoginForm.username !== 'admin') {
-      formData.password = MD5(formData.password).toString()
-    }
+    // if (activeTab.value === '1' && credentialsLoginForm.username !== 'admin') {
+    //   formData.password = MD5(formData.password).toString()
+    // }
     await userStore.userLogin(
       activeTab.value === '1' ? 'password' : 'phoneNumber',
       activeTab.value === '1' ? formData : mobileLoginForm
