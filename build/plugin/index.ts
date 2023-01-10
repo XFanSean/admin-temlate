@@ -3,7 +3,6 @@ import vue from '@vitejs/plugin-vue'
 import legacy from '@vitejs/plugin-legacy'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { configHtmlPlugin } from './html'
-import { configImageminPlugin } from './imagemin'
 import { configCompressPlugin } from './compression'
 import { configVisualizerConfig } from './visualizer'
 import { autoImportConfig } from './autoImport'
@@ -29,7 +28,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   // 打包情况下
   if (isBuild) {
     // 开启下使用图片压缩
-    VITE_USE_IMAGEMIN && plugins.push(configImageminPlugin())
+    // VITE_USE_IMAGEMIN && plugins.push(configImageminPlugin())
 
     // rollup-plugin-gzip
     plugins.push(configCompressPlugin(VITE_BUILD_COMPRESS, VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE))
