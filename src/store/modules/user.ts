@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import type { PasswordLoginParams, PhoneNumberLoginParams } from '#/user'
 import { getPermissionByToken, queryUserInfo, userPasswordLogin } from '@/api/user'
 import { removeItem, setItem } from '@/utils/cache/storage'
-import { useRoute, useRouter } from 'vue-router'
 import { CacheKeyEnum } from '@/enum/cache'
 import {
   addSlashToRouteComponent,
@@ -59,12 +58,6 @@ export const useUserStore = defineStore('user', {
     // token过期或者推出登录
     resetToken() {
       removeItem(CacheKeyEnum.TOKEN)
-      const { push } = useRouter()
-      const { path } = useRoute()
-      push({
-        path: '/login',
-        query: { redirectTo: path },
-      })
       location.reload()
     },
     // 获取用户权限表

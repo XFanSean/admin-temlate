@@ -5,6 +5,7 @@ interface IAppStoreState {
   menuList: AppRouteRecordRaw[]
   menuOpenKeys: string[]
   menuSelectKeys: string[]
+  collapsed: boolean
 }
 
 export const useAppStore = defineStore('app', {
@@ -12,6 +13,7 @@ export const useAppStore = defineStore('app', {
     menuList: [],
     menuOpenKeys: [],
     menuSelectKeys: [],
+    collapsed: false,
   }),
   actions: {},
 })

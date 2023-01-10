@@ -16,8 +16,12 @@ app.use(store)
 async function init() {
   const userStore = useUserStore()
   if (getItem('token')) {
-    await userStore.getUserInfo()
-    await userStore.getMenuList()
+    try {
+      await userStore.getUserInfo()
+      await userStore.getMenuList()
+    } catch (e) {
+      userStore.resetToken()
+    }
   }
 }
 await init()

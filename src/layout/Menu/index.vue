@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-full">
     <div class="flex items-center justify-center h-64px">
-      <span>商家后台</span>
+      <span>{{ appTitle }}</span>
     </div>
     <div class="flex-1">
       <Scrollbar>
@@ -25,33 +25,44 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 import MenuItem from './MenuItem.vue'
 import SubMenu from './SubMenu.vue'
 import { Scrollbar } from '@/components/Scrollbar'
+import { useRoute, useRouter } from 'vue-router'
 
 const appStore = useAppStore()
+const { push } = useRouter()
+const { path } = useRoute()
+
+onMounted(() => {
+  appStore.menuSelectKeys = [path]
+  const pathArr = path.split('/')
+  pathArr.shift()
+  pathArr.pop()
+  appStore.menuOpenKeys = pathArr.map((str: string) => '/' + str)
+})
 
 const menuList = computed(() => {
   return appStore.menuList
 })
 
-watch(
-  () => appStore.menuSelectKeys,
-  (val) => {
-    console.log(val)
-  }
-)
-
-watch(
-  () => appStore.menuOpenKeys,
-  (val) => {
-    console.log(val)
-  }
-)
-
-function handleMenuItem({ item }) {
-  console.log(item)
+function handleMenuItem(event: any) {
+  push(event.key)
 }
+
+const appTitle = ref('雷神商城商家后台')
+watch(
+  () => appStore.collapsed,
+  (newVal) => {
+    if (!newVal) {
+      setTimeout(() => {
+        appTitle.value = '雷神商城商家后台'
+      }, 200)
+    } else {
+      appTitle.value = '商家后台'
+    }
+  }
+)
 </script>

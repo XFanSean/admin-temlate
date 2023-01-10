@@ -4,10 +4,20 @@
       <slot></slot>
     </div>
     <transition name="fade">
-      <button v-show="showThumb" ref="thumbY" :style="thumbStyle.y" class="the-scrollbar-thumb" />
+      <button
+        v-show="showThumb"
+        ref="thumbY"
+        :style="thumbStyle.y"
+        class="the-scrollbar-thumb cursor-pointer"
+      />
     </transition>
     <transition name="fade">
-      <button v-show="showThumb" ref="thumbX" :style="thumbStyle.x" class="the-scrollbar-thumb" />
+      <button
+        v-show="showThumb"
+        ref="thumbX"
+        :style="thumbStyle.x"
+        class="the-scrollbar-thumb cursor-pointer"
+      />
     </transition>
   </div>
 </template>
@@ -106,8 +116,8 @@ function updateWrapStyle() {
   parent.style.overflow = 'hidden' // 这里一定要将父元素设置超出隐藏，不然弹性盒子布局时会撑开宽高
   const css = getComputedStyle(parent)
   // console.log("父元素边框尺寸 >>", css.borderLeftWidth, css.borderRightWidth, css.borderTopWidth, css.borderBottomWidth);
-  wrapStyle.width = `calc(100% + ${scrollbarSize}px + ${css.borderLeftWidth} + ${css.borderRightWidth})`
-  wrapStyle.height = `calc(100% + ${scrollbarSize}px + ${css.borderTopWidth} + ${css.borderBottomWidth})`
+  wrapStyle.width = `calc(100% + ${scrollbarSize}px + ${css.borderLeftWidth} + ${css.borderRightWidth} - ${props.thumbSize}px)`
+  wrapStyle.height = `calc(100% + ${scrollbarSize}px + ${css.borderTopWidth} + ${css.borderBottomWidth} - ${props.thumbSize}px)`
 }
 
 /** 初始化滚动指示器样式 */
@@ -228,15 +238,16 @@ onMounted(function () {
   document.addEventListener('mousedown', onDragStart)
   document.addEventListener('mousemove', onDragMove)
   document.addEventListener('mouseup', onDragEnd)
-  console.log(wrap.value!.children[0])
-  const { height } = useElementSize(wrap.value!.children[0] as HTMLElement)
+  if (wrap.value!.children[0]) {
+    const { height } = useElementSize(wrap.value!.children[0] as HTMLElement)
 
-  watch(
-    () => height.value,
-    () => {
-      updateThumbStyle()
-    }
-  )
+    watch(
+      () => height.value,
+      () => {
+        updateThumbStyle()
+      }
+    )
+  }
 })
 
 onUnmounted(function () {
@@ -273,5 +284,8 @@ defineExpose({
       background-color: rgba(0, 0, 0, 0.4);
     }
   }
+}
+::-webkit-scrollbar {
+  width: 0;
 }
 </style>
