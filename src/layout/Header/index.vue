@@ -7,34 +7,26 @@
       <MenuUnfoldOutlined v-if="collapsed" />
       <MenuFoldOutlined v-else />
     </div>
-    <div class="flex items-center pr-10px">
-      <a-space class="h-full">
-        <a-avatar>
+    <a-dropdown>
+      <div class="flex items-center pr-16px pl-16px cursor-pointer hover:bg-gray-500/20">
+        <a-avatar :src="userInfo.avatar">
           <template #icon><UserOutlined /></template>
         </a-avatar>
-        <a-dropdown>
-          <div class="flex justify-center items-center w-80px cursor-pointer" @click.prevent>
-            {{ username }}
-            <DownOutlined />
-          </div>
-          <template #overlay>
-            <a-menu>
-              <a-menu-item @click="handleLogoutBtn"> 登出 </a-menu-item>
-            </a-menu>
-          </template>
-        </a-dropdown>
-      </a-space>
-    </div>
+        <div class="ml-8px">
+          {{ userInfo.realname }}
+        </div>
+      </div>
+      <template #overlay>
+        <a-menu>
+          <a-menu-item @click="handleLogoutBtn">注销</a-menu-item>
+        </a-menu>
+      </template>
+    </a-dropdown>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {
-  DownOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-} from '@ant-design/icons-vue'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
 import { useAppStore } from '@/store/modules/app'
 import { computed } from 'vue'
 import { useUserStore } from '@/store/modules/user'
@@ -49,7 +41,7 @@ function handleCollapsed() {
   appStore.collapsed = !appStore.collapsed
 }
 
-const username = computed(() => userStore.userInfo.realname)
+const userInfo = computed(() => userStore.userInfo)
 
 function handleLogoutBtn() {
   userStore.resetToken()

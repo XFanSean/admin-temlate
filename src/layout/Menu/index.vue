@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col h-full" style="background-color: #001529; color: #fff">
     <div class="flex items-center justify-center h-64px">
       <span>{{ appTitle }}</span>
     </div>
@@ -10,6 +10,7 @@
           v-model:selectedKeys="appStore.menuSelectKeys"
           mode="inline"
           style="width: 100%"
+          theme="dark"
           @click="handleMenuItem"
         >
           <template v-for="item in menuList" :key="item.name">

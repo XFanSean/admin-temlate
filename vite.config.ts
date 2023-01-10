@@ -21,10 +21,10 @@ export default defineConfig(({ mode, command }) => {
     },
     server: {
       port: VITE_PORT,
-      // https: true,
+      https: false,
       proxy: createProxy(VITE_PROXY),
       hmr: true,
-      // host: 'lo',
+      host: true,
     },
     plugins: createVitePlugins(viteEnv, isBuild),
     css: {
