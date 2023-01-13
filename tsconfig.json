@@ -16,7 +16,8 @@
       "@": ["src"],
       "#/*": ["types/*"],
       "#": ["types"]
-    }
+    },
+    "noEmit": true
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "build/*.ts", "build/**/*.ts", "types/*.d.ts"],
   "exclude": ["*.js"]

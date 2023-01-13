@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vite --mode development",
     "build": "vue-tsc && vite build --mode production",
+    "build:test": "vite build --mode test",
+    "build:prod": "vue-tsc && vite build --mode production",
     "preview": "vite preview --mode production",
     "lint": "eslint src --fix --ext .ts,.tsx,.vue,.js,.jsx",
     "prettier": "prettier --write ."
