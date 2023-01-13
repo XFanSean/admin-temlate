@@ -8,6 +8,7 @@ import { configVisualizerConfig } from './visualizer'
 import { autoImportConfig } from './autoImport'
 import { unocssConfig } from './unocss'
 import { configSvgIconsPlugin } from './svgSprite'
+import { createTopLevelAwait } from './topLevelAwait'
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -23,6 +24,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     autoImportConfig(),
     unocssConfig(),
     configSvgIconsPlugin(isBuild),
+    createTopLevelAwait(),
   ]
 
   // 打包情况下
