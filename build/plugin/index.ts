@@ -8,7 +8,7 @@ import { configVisualizerConfig } from './visualizer'
 import { autoImportConfig } from './autoImport'
 import { unocssConfig } from './unocss'
 import { configSvgIconsPlugin } from './svgSprite'
-import { createTopLevelAwait } from './topLevelAwait'
+// import { createTopLevelAwait } from './topLevelAwait'
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -24,7 +24,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     autoImportConfig(),
     unocssConfig(),
     configSvgIconsPlugin(isBuild),
-    createTopLevelAwait(),
+    // createTopLevelAwait(),
   ]
 
   // 打包情况下
@@ -36,7 +36,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     VITE_LEGACY && plugins.push(legacy())
 
     // 项目大小分析
-    plugins.push(configVisualizerConfig())
+    // plugins.push(configVisualizerConfig())
   }
 
   return plugins
