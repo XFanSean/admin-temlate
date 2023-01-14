@@ -8,10 +8,6 @@ import { store } from './store'
 import { useUserStore } from '@/store/modules/user'
 import { getItem } from '@/utils/cache/storage'
 
-const app = createApp(App)
-// 状态管理
-app.use(store)
-
 // 解决刷新路由丢失的问题
 async function init() {
   const userStore = useUserStore()
@@ -24,9 +20,17 @@ async function init() {
     }
   }
 }
-await init()
 
-// 路由
-app.use(router)
+async function bootstrap() {
+  const app = createApp(App)
+  // 状态管理
+  app.use(store)
+  await init()
 
-app.mount('#app')
+  // 路由
+  app.use(router)
+
+  app.mount('#app')
+}
+
+bootstrap()
